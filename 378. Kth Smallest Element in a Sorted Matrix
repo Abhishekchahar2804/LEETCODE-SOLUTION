@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& m, int k) {
+      int n=m.size();
+        if(k==0 || k>n*n || n==0){
+            return -1;
+        }
+        if(k==1){
+            return m[0][0];
+        }
+        int lo=m[0][0];
+        int hi = m[n-1][n-1];
+        while(lo<hi){
+            int mid = lo+(hi-lo)/2;
+            int count=0;
+            int j=n-1;
+            for(int i=0;i<n;i++){
+                while(j>=0 && m[i][j]>mid){
+                    j--;
+                }
+                count += (j+1);
+            }
+            if(count<k){
+                lo = mid+1;
+            }
+            else{
+                hi=mid;
+            }
+        }
+        return lo;
+    }
+};
